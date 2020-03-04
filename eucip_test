@@ -1,0 +1,32 @@
+def read_file(file):
+  questions = []
+  text = ''
+  for line in file:
+    text += line
+    if text[len(text) - 1] == '▲':
+      questions.append(unpack_string(text.strip('▲')))
+      text = ''
+    else:
+      text += ' '
+  return questions
+
+
+def unpack_string(text):
+  dict = {}
+  dict["text"], dict["question"], dict["answer"] = text.split('►')
+  dict["question"] = dict["question"].split('▪')
+  dict["answer"] = dict["answer"].split('▪')
+  return dict
+
+
+def print_data(data):
+  for dat in data:
+    print(dat["text"] + '\n')
+    for i, q in enumerate(dat["question"]):
+      print(i, q)
+
+
+if __name__ == "__main__":
+  file = ["Inkrementaalne tarkvaraprotsessi mudel on►mõistlik lahendus, kui nõudmised on selgelt ja hästi kirjeldatud▪hea meetod, kui töötavat programmi on ruttu vaja▪kõige parem kasutada siis, kui projektiga töötab suur meeskond▪uudne mudel,","mida kasutatakse ainult vabavara arendamiseks►Vale▪Õige▪Vale▪Vale▲","Millistes tarkvara elutsükli faasides saab kasutada CASE-vahendeid?►analüüs▪analüüs▪Õige▪Väär▪kavandamine▪kavandamine▪Õige▪Väär▪teostus►Vale▪Õige▪Vale▪Vale▪Vale▪Õige▪Vale▪Vale▪Vale▲"]
+  data = read_file(file)
+  print_data(data)
